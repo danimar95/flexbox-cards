@@ -7,23 +7,21 @@ import {
 } from "@mui/material";
 import { CardProps } from "../../types/component.types";
 
-
-const MaterialCard = ({ onClick, title, image, description }: CardProps) => (
-  <Card sx={{ maxWidth: 345, borderRadius: "20px" }} 
-    onClick={onClick}>
+const MaterialCard = ({ onClick, item }: CardProps) => (
+  <Card sx={{ maxWidth: 345, borderRadius: "20px" }} onClick={onClick}>
     <CardActionArea>
       <CardMedia
         component="img"
         height="200"
-        image={image}
+        image={item.image}
         alt="green iguana"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {title}
+          {item.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {description}
+          {item.description}
         </Typography>
       </CardContent>
     </CardActionArea>

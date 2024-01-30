@@ -1,4 +1,4 @@
-import { Grid, IconButton, Modal, Typography } from "@mui/material";
+import { CardMedia, Grid, IconButton, Modal, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { ModalProps } from "../../types/component.types";
 
@@ -15,7 +15,7 @@ const style = {
   borderRadius: "20px",
 };
 
-const MaterialModal = ({ open, handleClose }: ModalProps) => {
+const MaterialModal = ({ open, handleClose, title, description, image }: ModalProps) => {
   return (
     <Modal
       id="modal"
@@ -28,7 +28,7 @@ const MaterialModal = ({ open, handleClose }: ModalProps) => {
       <Grid container spacing={4} sx={style}>
         <Grid xs={11}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            {title}
           </Typography>
         </Grid>
         <Grid xs={1}>
@@ -36,8 +36,14 @@ const MaterialModal = ({ open, handleClose }: ModalProps) => {
             <CancelIcon />
           </IconButton>
         </Grid>
+        <CardMedia
+          component="img"
+          height="200"
+          image={image}
+          alt="green iguana"
+        />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          {description}
         </Typography>
       </Grid>
     </Modal>

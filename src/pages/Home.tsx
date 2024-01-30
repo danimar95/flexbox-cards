@@ -4,7 +4,8 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import CustomCard from "../components/custom/CustomCard";
 import CustomModal from "../components/custom/CustomModal";
 import AppCard from "../components/materialUI/MaterialCard";
-import AppModal from "../components/materialUI/MaterialModal";
+import MaterialModal from "../components/materialUI/MaterialModal";
+import { Item } from "../types/component.types";
 
 const Home = () => {
   const [data] = React.useState(
@@ -20,6 +21,7 @@ const Home = () => {
       }))
   );
   const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState<any>({});
   const [customOpen, setCustomOpen] = React.useState(false);
   const [style, setStyle] = React.useState("mui");
   const handleOpen = () => setOpen(true);
@@ -27,33 +29,60 @@ const Home = () => {
   const handleOpenCustom = () => setCustomOpen(true);
   const handleCloseCustom = () => setCustomOpen(false);
 
+  const selectCard = (item: Item) => {
+    handleOpen();
+    setSelected(item);
+  };
+
+  const selectCustomCard = (item: Item) => {
+    handleOpenCustom();
+    setSelected(item);
+  };
+
   return (
     <>
       {style === "mui" && (
         <Box sx={{ p: 4 }}>
-          <Grid container >
+          <Grid container>
             <Grid item xs={12} sm={12} md={10}>
               <Typography variant="h4" component="h2">
                 Flexbox layout using Material UI
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={12} md={2} justifyContent={'flex-end'} display={'flex'}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={2}
+              justifyContent={{xs:'center', lg:'flex-end'}}
+              display={"flex"}
+            >
               <Button variant="contained" onClick={() => setStyle("custom")}>
                 Custom
               </Button>
             </Grid>
             {data.map((item, index) => (
-              <Grid item xs={12} sm={4} md={3} p={3} key={index} justifyContent={'center'} display={'flex'}>
-                <AppCard
-                  onClick={handleOpen}
-                  image={item.image}
-                  title={item.title}
-                  description={item.description}
-                />
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                md={3}
+                p={3}
+                key={index}
+                justifyContent={"center"}
+                display={"flex"}
+              >
+                <AppCard onClick={() => selectCard(item)} item={item} />
               </Grid>
             ))}
           </Grid>
-          <AppModal open={open} handleClose={handleClose} />
+          <MaterialModal
+            open={open}
+            handleClose={handleClose}
+            title={selected.title}
+            description={selected.description}
+            image={selected.image}
+          />
         </Box>
       )}
       {style === "custom" && (
@@ -67,14 +96,18 @@ const Home = () => {
           <div className="card-container">
             {data.map((item, index) => (
               <CustomCard
-                image={item.image}
-                title={item.title}
-                description={item.description}
-                onClick={handleOpenCustom}
+                item={item}
+                onClick={() => selectCustomCard(item)}
                 key={index}
               />
             ))}
-            <CustomModal open={customOpen} handleClose={handleCloseCustom} />
+            <CustomModal
+              open={customOpen}
+              handleClose={handleCloseCustom}
+              title={selected.title}
+              description={selected.description}
+              image={selected.image}
+            />
           </div>
         </div>
       )}
