@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Flexbox Layout
 
 This project implements Flexbox to display some cards responsively. It includes a button to change between the Material UI component library and custom CSS styling.
 
